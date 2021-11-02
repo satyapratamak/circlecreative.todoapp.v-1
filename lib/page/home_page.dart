@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todoapp/main.dart';
+import 'package:todoapp/widget/add_todo_dialog_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -26,9 +27,11 @@ class _HomePageState extends State<HomePage> {
         unselectedItemColor: Colors.white.withOpacity(0.7),
         selectedItemColor: Colors.white,
         currentIndex: selectedIndex,
-        onTap: (index) => setState(() {
-          selectedIndex = index;
-        }),
+        onTap: (index) => setState(
+          () {
+            selectedIndex = index;
+          },
+        ),
         items: const [
           BottomNavigationBarItem(
             icon: Icon(
@@ -45,6 +48,20 @@ class _HomePageState extends State<HomePage> {
             label: 'Completed',
           ),
         ],
+      ),
+      body: tabs[selectedIndex],
+      floatingActionButton: FloatingActionButton(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        backgroundColor: Colors.black,
+        onPressed: () => showDialog(
+          context: context,
+          barrierDismissible: true,
+          //child: AddTodoDialogWidget(),
+          builder: (context) => const AddTodoDialogWidget(),
+        ),
+        child: const Icon(Icons.add),
       ),
     );
   }
