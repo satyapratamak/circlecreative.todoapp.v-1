@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todoapp/widget/todo_form_widget.dart';
 
 class AddTodoDialogWidget extends StatefulWidget {
   const AddTodoDialogWidget({Key? key}) : super(key: key);
@@ -13,7 +14,28 @@ class _AddTodoDialogWidgetState extends State<AddTodoDialogWidget> {
   String description = '';
 
   @override
-  Widget build(BuildContext context) {
-    return Container();
-  }
+  Widget build(BuildContext context) => AlertDialog(
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Add Todo',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 22,
+              ),
+            ),
+            const SizedBox(height: 8),
+            TodoFormWidget(
+              onChangedTitle: (title) => setState(
+                () => this.title = title,
+              ),
+              onChangedDescription: (description) =>
+                  setState(() => this.description = description),
+              onSavedTodo: () {},
+            ),
+          ],
+        ),
+      );
 }
