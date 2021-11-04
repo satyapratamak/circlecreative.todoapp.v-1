@@ -3,6 +3,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 import 'package:todoapp/misc/utils.dart';
 import 'package:todoapp/model/todo.dart';
+import 'package:todoapp/page/edit_todo_page.dart';
 import 'package:todoapp/provider/todos_provider.dart';
 
 class TodoWidget extends StatelessWidget {
@@ -19,7 +20,7 @@ class TodoWidget extends StatelessWidget {
           actions: [
             IconSlideAction(
               color: Colors.green,
-              onTap: () {},
+              onTap: () => editTodo(context, todo),
               caption: 'Edit',
               icon: Icons.edit,
             )
@@ -35,7 +36,9 @@ class TodoWidget extends StatelessWidget {
         ),
       );
 
-  Widget buildTodo(BuildContext context) => Container(
+  Widget buildTodo(BuildContext context) => GestureDetector(
+      onDoubleTap: () => editTodo(context, todo),
+      child: Container(
         color: Colors.white,
         padding: const EdgeInsets.all(20),
         child: Row(
@@ -79,11 +82,16 @@ class TodoWidget extends StatelessWidget {
             ),
           ],
         ),
-      );
+      ));
+
   void deleteTodo(BuildContext context, Todo? todo) {
     final provider = Provider.of<TodosProvider>(context, listen: false);
     provider.removeTodo(todo);
 
     Utils.showSnackbar(context, 'Deleted the task');
   }
+
+  void editTodo(BuildContext context, Todo? todo) => Navigator.of(context).push(
+        MaterialPageRoute(builder: (context) => EditTodoPage(todo: todo)),
+      );
 }
