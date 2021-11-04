@@ -48,7 +48,7 @@ class TodoFormWidget extends StatelessWidget {
       );
   Widget buildDescriptionWidget() => TextFormField(
         initialValue: description,
-        maxLines: 3,
+        maxLines: 2,
         validator: (description) {
           if (description!.isEmpty) {
             return 'The description cannot be empty';
